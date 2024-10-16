@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, ModalBody, TextInput } from 'flowbite-react';
+import { Alert, Button, Modal, TextInput } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -10,6 +10,12 @@ import {
 import { app } from '../firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import {
+    updateStart,
+    updateSuccess,
+    updateFailure,
+    
+  } from '../redux/user/userSlice';
 
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
@@ -68,7 +74,7 @@ export default function DashProfile() {
       },
       (error) => {
         setImageFileUploadError(
-          'Could not upload image (File must be less than 2MB)'
+          "Impossible de télécharger l'image (le fichier doit être inférieur à 2 Mo)"
         );
         setImageFileUploadProgress(null);
         setImageFile(null);
@@ -94,15 +100,15 @@ export default function DashProfile() {
     setUpdateUserError(null);
     setUpdateUserSuccess(null);
     if (Object.keys(formData).length === 0) {
-      setUpdateUserError('No changes made');
+      setUpdateUserError('Aucune modification apportée');
       return;
     }
     if (imageFileUploading) {
-      setUpdateUserError('Please wait for image to upload');
+      setUpdateUserError("Veuillez patienter pendant le téléchargement de l'image");
       return;
     }
     try {
-      dispatch();
+      dispatch(updateStart());
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: 'PUT',
         headers: {
@@ -112,14 +118,14 @@ export default function DashProfile() {
       });
       const data = await res.json();
       if (!res.ok) {
-        dispatch();
+        dispatch(updateFailure(data.message));
         setUpdateUserError(data.message);
       } else {
-        dispatch();
-        setUpdateUserSuccess("User's profile updated successfully");
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("Le profil de l'utilisateur a été mis à jour avec succès");
       }
     } catch (error) {
-      dispatch();
+      dispatch(updateFailure(error.message));
       setUpdateUserError(error.message);
     }
   };
@@ -247,14 +253,14 @@ export default function DashProfile() {
           <div className='text-center'>
             <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
             <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
-              Are you sure you want to delete your account?
+            Etes-vous sûr de vouloir supprimer votre compte ?
             </h3>
             <div className='flex justify-center gap-4'>
               <Button color='failure' >
-                Yes, I m sure
+              Oui, j&apos;en suis sûr. 
               </Button>
               <Button color='gray' onClick={() => setShowModal(false)}>
-                No, cancel
+              Non, annuler
               </Button>
             </div>
           </div>
