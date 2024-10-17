@@ -17,6 +17,7 @@ import {
     deleteUserStart,
     deleteUserFailure,
     deleteUserSuccess,
+    signoutSuccess,
     
   } from '../redux/user/userSlice';
 
@@ -150,6 +151,23 @@ const handleDeleteUser = async () => {
       dispatch(deleteUserFailure(error.message));
     }
   };
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
  
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
@@ -244,7 +262,7 @@ const handleDeleteUser = async () => {
         <span onClick={() => setShowModal(true)} className='cursor-pointer'>
         Supprimer le compte
         </span>
-        <span  className='cursor-pointer'>
+        <span onClick={handleSignout} className='cursor-pointer'>
         Se déconnecter
         </span>
       </div>
