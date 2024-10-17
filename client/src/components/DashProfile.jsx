@@ -253,7 +253,7 @@ const handleDeleteUser = async () => {
               gradientDuoTone='purpleToPink'
               className='w-full'
             >
-              Create a post
+              Créer une affiche
             </Button>
           </Link>
         )}
