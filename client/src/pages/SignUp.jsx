@@ -58,10 +58,10 @@ export default function SignUp() {
         <div className='flex-1'>
           <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
             <div>
-              <Label value="Votre nom d'utilidsateur" />
+              <Label value="Votre nom d'utilisateur" />
               <TextInput
                 type='text'
-                placeholder="Nom d'utilidsateur"
+                placeholder="Nom d'utilisateur"
                 id='username'
                 onChange={handleChange}
               />
@@ -70,7 +70,7 @@ export default function SignUp() {
               <Label value='Votre email' />
               <TextInput
                 type='email'
-                placeholder='votreemail@gmail.com'
+                placeholder='votremail@gmail.com'
                 id='email'
                 onChange={handleChange}
               />
@@ -92,7 +92,7 @@ export default function SignUp() {
               {loading ? (
                 <>
                   <Spinner size='sm' />
-                  <span className='pl-3'>Loading...</span>
+                  <span className='pl-3'>Chargement...</span>
                 </>
               ) : (
                 "S'inscrire"

@@ -109,7 +109,7 @@ export default function Search() {
             Terme de recherche:
             </label>
             <TextInput
-              placeholder='Rechercherz...'
+              placeholder='Recherchez...'
               id='searchTerm'
               type='text'
               value={sidebarData.searchTerm}
